@@ -214,7 +214,7 @@ cdef class GenericTagger:
     def __init__(self, args='', wrapper=make_tuple, quiet=False):
         # The first argument is ignored because in the MeCab binary the argc
         # and argv for the process are used here.
-        args = [b'fugashi', b'-C'] + [bytes(arg, 'utf-8') for arg in shlex.split(args)]
+        args = [b'fugashi', b'-C'] + [bytes(arg, 'utf-8') for arg in _split_args(args)]
         cdef int argc = len(args)
         cdef char** argv = <char**>malloc(argc * sizeof(char*))
         for ii, arg in enumerate(args):
@@ -408,11 +408,93 @@ def create_feature_wrapper(name, fields, default=None):
     """
     return namedtuple(name, fields, defaults=(None,) * len(fields))
 
-def build_dictionary(args):
-    args = [bytes(arg, 'utf-8') for arg in shlex.split(args)]
-    cdef int argc = len(args)
+def build_dictionary(str args):
+    """Build a MeCab dictionary from arguments.
+
+    Args:
+        args: Command line arguments for mecab-dict-index
+
+    Returns:
+        0 on success, non-zero on failure
+    """
+    byte_args = [bytes(arg, 'utf-8') for arg in _split_args(args)]
+
+    cdef int argc = len(byte_args)
     cdef char** argv = <char**>malloc(argc * sizeof(char*))
-    for ii, arg in enumerate(args):
-        argv[ii] = arg
-    out = mecab_dict_index(argc, argv)
-    free(argv)
+    if argv == NULL:
+        raise MemoryError('Failed to allocate memory for arguments')
+    try:
+        for ii, arg in enumerate(byte_args):
+            argv[ii] = arg
+        return mecab_dict_index(argc, argv)
+    finally:
+        free(argv)
+
+def _split_args(str args):
+    """Split arguments for MeCab.
+
+    This function handles both Windows and POSIX systems.
+    shlex.split() does not support Windows paths correctly, resulting in improper escaping of backslashes.
+    Therefore, on Windows, we use a custom process, while on POSIX systems, we use shlex.split() as usual.
+
+    Args:
+        args: Command line arguments for MeCab
+
+    Returns:
+        List of arguments
+    """
+    if sys.platform == 'win32':
+        # Parse arguments with quote handling
+        split_args = []
+        current_arg = []
+        in_quotes = False
+        escape = False
+        i = 0
+        while i < len(args):
+            char = args[i]
+            # Handle escape sequence
+            if escape:
+                current_arg.append(char)
+                escape = False
+                i += 1
+                continue
+            # Check for escape character
+            if char == '\\':
+                # Look ahead to see if this is really an escape
+                if i + 1 < len(args):
+                    next_char = args[i + 1]
+                    if next_char in ['"', '\\']:
+                        escape = True
+                        i += 1
+                        continue
+                # If it's not escaping anything, treat as normal character
+                current_arg.append(char)
+                i += 1
+                continue
+            # Handle quotes
+            if char == '"':
+                in_quotes = not in_quotes
+                i += 1
+                continue
+            # Handle spaces
+            if char.isspace() and not in_quotes:
+                if current_arg:
+                    split_args.append(''.join(current_arg))
+                    current_arg = []
+                i += 1
+                continue
+            current_arg.append(char)
+            i += 1
+        # Handle remaining argument
+        if current_arg:
+            split_args.append(''.join(current_arg))
+        # Validate quotes are properly closed
+        if in_quotes:
+            raise ValueError('Unclosed quotation mark in arguments')
+        # Convert backslashes to forward slashes in each argument
+        split_args = [arg.replace('\\', '/') for arg in split_args]
+    else:
+        # On POSIX systems, use shlex
+        split_args = shlex.split(args)
+
+    return split_args
