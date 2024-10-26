@@ -40,16 +40,33 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Setup VS 2019
-      uses: microsoft/setup-msbuild@v2
+    - name: Setup MSVC Developer Command Prompt (MSVC v142)
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        toolset: 14.29
     - name: Build MeCab from source
       shell: cmd
       run: |
         git clone https://github.com/ikegami-yukino/mecab.git
         cd mecab/mecab/src
-        nmake -f Makefile.x64.msvc libmecab
+        nmake -f Makefile.x64.msvc
         mkdir C:\mecab
         copy libmecab.dll C:\mecab\
+        copy libmecab.lib C:\mecab\
+        copy mecab-cost-train.exe C:\mecab\
+        copy mecab-cost-train.lib C:\mecab\
+        copy mecab-dict-gen.exe C:\mecab\
+        copy mecab-dict-gen.lib C:\mecab\
+        copy mecab-dict-index.exe C:\mecab\
+        copy mecab-dict-index.lib C:\mecab\
+        copy mecab-system-eval.exe C:\mecab\
+        copy mecab-system-eval.lib C:\mecab\
+        copy mecab-test-gen.exe C:\mecab\
+        copy mecab-test-gen.lib C:\mecab\
+        copy mecab.exe C:\mecab\
+        copy mecab.h C:\mecab\
+        copy mecab.lib C:\mecab\
+        copy ..\mecabrc C:\mecab\
     - name: Install dependencies
       run: |
         python -m pip install --upgrade setuptools wheel pip setuptools-scm
