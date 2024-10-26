@@ -5,7 +5,7 @@ X86_TRIPLET=x86_64-apple-macos10.9
 ARM_TRIPLET=arm64-apple-macos11
 
 
-git clone --depth=1 https://github.com/taku910/mecab.git
+git clone --depth=1 https://github.com/ikegami-yukino/mecab.git
 cd mecab/mecab
 
 rm -rf src/.libs-arm64 src/.libs-x86_64 src/.libs.combined

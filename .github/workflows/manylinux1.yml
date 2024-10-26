@@ -13,7 +13,7 @@ jobs:
         python-version: '>=3.8 <3.13'
     - name: install MeCab
       run: |
-        git clone --depth=1 https://github.com/taku910/mecab.git
+        git clone --depth=1 https://github.com/ikegami-yukino/mecab.git
         cd mecab/mecab
         ./configure --enable-utf8-only
         make
@@ -44,7 +44,7 @@ jobs:
       uses: ./.github/workflows/actions/build-manylinux/
     - name: Upload Wheels
       uses: actions/upload-artifact@v4
-      with: 
+      with:
         name: manylinux2014-wheels
         path: manylinux2014-wheels
     - name: Publish to PyPI if tagged

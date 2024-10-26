@@ -36,18 +36,18 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Cache mecab
-      id: cache-mecab
-      uses: actions/cache@v4
+    - name: Setup VS 2019
+      uses: microsoft/setup-msbuild@v2
       with:
-        path: C:/mecab
-        key: mecab-win-build
-    - name: Download MeCab Win and Unzip it
-      if: steps.cache-mecab.outputs.cache-hit != 'true'
-      shell: bash
+        vs-version: '[16.0,17.0)'
+    - name: Build MeCab from source
+      shell: cmd
       run: |
-        curl -LO "https://github.com/chezou/mecab/releases/download/mecab-0.996-msvc-5/mecab-msvc-x64.zip"
-        unzip -o "mecab-msvc-x64.zip" -d c:/mecab
+        git clone https://github.com/ikegami-yukino/mecab.git
+        cd mecab/mecab/src
+        nmake -f Makefile.x64.msvc libmecab
+        mkdir C:\mecab
+        copy libmecab.dll C:\mecab\
     - name: Install dependencies
       run: |
         python -m pip install --upgrade setuptools wheel pip setuptools-scm
@@ -75,4 +75,3 @@ jobs:
       run: |
         pip install twine
         twine upload dist/fugashi*
-

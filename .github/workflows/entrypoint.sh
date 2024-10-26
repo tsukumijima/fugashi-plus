@@ -4,7 +4,7 @@ set -e
 
 # install MeCab
 # TODO specify the commit used here
-git clone --depth=1 https://github.com/taku910/mecab.git
+git clone --depth=1 https://github.com/ikegami-yukino/mecab.git
 cd mecab/mecab
 if [ "$(uname -m)" == "aarch64" ]
 then
