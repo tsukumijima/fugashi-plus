@@ -31,14 +31,14 @@ extensions = Extension(
 )
 
 setup(
-    name="fugashi",
+    name="fugashi-plus",
     use_scm_version=True,
     author="Paul O'Leary McCann",
     author_email="polm@dampfkraft.com",
-    description="A Cython MeCab wrapper for fast, pythonic Japanese tokenization.",
+    description="A Cython MeCab wrapper for fast, pythonic Japanese tokenization and morphological analysis with additional improvements.",
     long_description=pathlib.Path("README.md").read_text("utf8"),
     long_description_content_type="text/markdown",
-    url="https://github.com/polm/fugashi",
+    url="https://github.com/tsukumijima/fugashi-plus",
     packages=setuptools.find_packages(),
     package_data={
         "fugashi": [

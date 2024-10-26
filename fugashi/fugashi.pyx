@@ -171,12 +171,12 @@ def make_tuple(*args):
 FAILMESSAGE = """
 Failed initializing MeCab. Please see the README for possible solutions:
 
-    https://github.com/polm/fugashi
+    https://github.com/tsukumijima/fugashi-plus
 
 If you are still having trouble, please file an issue here, and include the
 ERROR DETAILS below:
 
-    https://github.com/polm/fugashi/issues
+    https://github.com/tsukumijima/fugashi-plus/issues
 
 issueを英語で書く必要はありません。
 

@@ -87,7 +87,7 @@ jobs:
       run: |
         ls -la
         VERSION=$(python setup.py --version)
-        pip install "dist/fugashi-${VERSION}-cp${{ matrix.py-short }}-cp${{ matrix.py-short2 }}-win_amd64.whl"
+        pip install "dist/fugashi_plus-${VERSION}-cp${{ matrix.py-short }}-cp${{ matrix.py-short2 }}-win_amd64.whl"
     - name: Publish to PyPI if tagged
       if: startsWith(github.ref, 'refs/tags')
       env:
