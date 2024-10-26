@@ -376,7 +376,8 @@ cdef class Tagger(GenericTagger):
     def __init__(self, arg=''):
         # Use pip installed unidic if available
         unidicdir = try_import_unidic()
-        if unidicdir:
+        # Only add unidic paths if custom paths are not specified
+        if unidicdir and '-r ' not in arg and '-d ' not in arg:
             mecabrc = os.path.join(unidicdir, 'mecabrc')
             arg = '-r "{}" -d "{}" '.format(mecabrc, unidicdir) + arg
 
