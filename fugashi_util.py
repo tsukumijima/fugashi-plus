@@ -1,8 +1,6 @@
 import os
 import platform
-import site
 import subprocess
-import glob
 
 def mecab_config(com="mecab-config"):
     output = subprocess.check_output([com, "--inc-dir", "--libs-only-L", "--libs-only-l"])
@@ -37,10 +35,10 @@ def check_libmecab():
     will be installed or the parameters will otherwise be figured out."""
 
     configs = [
-            mecab_config_windows,
-            mecab_config,
-            mecab_config_cygwin,
-            ]
+        mecab_config_windows,
+        mecab_config,
+        mecab_config_cygwin,
+    ]
 
     # A few scripts will use a build directory. Save where we start so we can
     # reset the directory after each build step.

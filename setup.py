@@ -22,15 +22,15 @@ libraries = mecab_config[2].split()
 extra_objects = mecab_config[3].split()
 extra_link_args = mecab_config[4].split()
 
-extensions = Extension('fugashi.fugashi', 
-        ['fugashi/fugashi.pyx'], 
+extensions = Extension('fugashi.fugashi',
+        ['fugashi/fugashi.pyx'],
         libraries=libraries,
         library_dirs=library_dirs,
         include_dirs=include_dirs,
         extra_objects=extra_objects,
         extra_link_args=extra_link_args)
 
-setup(name='fugashi', 
+setup(name='fugashi',
       use_scm_version=True,
       author="Paul O'Leary McCann",
       author_email="polm@dampfkraft.com",

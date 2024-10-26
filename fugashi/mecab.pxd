@@ -5,7 +5,7 @@ cdef extern from "mecab.h":
         unsigned int size
         unsigned short version
         mecab_dictionary_info_t* next
-        
+
     cdef struct mecab_node_t:
         mecab_node_t *prev
         mecab_node_t *next
@@ -17,7 +17,7 @@ cdef extern from "mecab.h":
         unsigned short posid
         unsigned char char_type
         unsigned char stat
-    
+
     cdef struct mecab_model_t:
         pass
 
@@ -31,7 +31,7 @@ cdef extern from "mecab.h":
     cdef const mecab_dictionary_info_t* mecab_dictionary_info(mecab_t *mecab)
 
     cdef char* mecab_nbest_sparse_tostr(mecab_t *mecab, size_t N, const char *str)
-    cdef int mecab_nbest_init(mecab_t *mecab, const char *str) 
+    cdef int mecab_nbest_init(mecab_t *mecab, const char *str)
     cdef const char* mecab_strerror(mecab_t *mecab)
 
     cdef int mecab_dict_index(int argc, char**argv)

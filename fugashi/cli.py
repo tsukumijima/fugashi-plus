@@ -38,7 +38,7 @@ def info():
 
 def build_dict():
     """EXPERIMENTAL A wrapper for MeCab's user dictionary building command.
-    
+
     This also defaults to utf8.
     """
     # TODO simplify using pip-installed dictionaries as base

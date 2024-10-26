@@ -1,6 +1,6 @@
 #cython: language_level=3
 from fugashi.mecab cimport (mecab_new, mecab_sparse_tostr2, mecab_t, mecab_node_t,
-        mecab_sparse_tonode, mecab_nbest_sparse_tostr, 
+        mecab_sparse_tonode, mecab_nbest_sparse_tostr,
         mecab_dictionary_info_t, mecab_dictionary_info,
         mecab_model_new, mecab_strerror, mecab_dict_index,
         mecab_nbest_init, mecab_nbest_next_tonode)
@@ -70,7 +70,7 @@ cdef class Node:
     @surface.setter
     def surface(self, ss):
         self._surface = ss
-    
+
     @property
     def feature(self):
         if self.features is None:
@@ -80,7 +80,7 @@ cdef class Node:
     @property
     def feature_raw(self):
         return self.c_node.feature.decode('utf-8')
-    
+
     @property
     def length(self):
         return self.c_node.length
@@ -112,7 +112,7 @@ cdef class Node:
             return ''
         else:
             return ' ' * (self.rlength - self.length)
-        
+
     cdef list pad_none(self, list fields):
         try:
             d = len(self.wrapper._fields) - len(fields)
@@ -125,7 +125,7 @@ cdef class Node:
         if '"' in raw:
             # This happens when a field contains commas. In Unidic this only
             # happens for the "aType" field used for accent data, and then only
-            # a minority of the time. 
+            # a minority of the time.
             fields = next(csv.reader([raw]))
         else:
             fields = raw.split(',')
@@ -271,7 +271,7 @@ cdef class GenericTagger:
             nn = self.wrap(node)
 
             # TODO maybe add an option to this function that doesn't cache the
-            # surface. Not caching here is faster but means node surfaces are 
+            # surface. Not caching here is faster but means node surfaces are
             # invalidated on the next call of this function.
 
             # In theory the input string should be re-usable, but it's hard to
@@ -325,9 +325,9 @@ cdef class GenericTagger:
                     self._cache[shash] = sys.intern(surf.decode("utf-8"))
                 nn.surface = self._cache[shash]
                 out.append(nn)
-            
+
             ret.append(out)
-        
+
         return ret
 
     @property
@@ -416,4 +416,3 @@ def build_dictionary(args):
         argv[ii] = arg
     out = mecab_dict_index(argc, argv)
     free(argv)
-
