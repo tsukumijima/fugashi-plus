@@ -48,7 +48,9 @@ setup(
     },
     zip_safe=False,  # Required for type hints to work
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
+        "Environment :: Console",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: Japanese",
         "Operating System :: POSIX :: Linux",
