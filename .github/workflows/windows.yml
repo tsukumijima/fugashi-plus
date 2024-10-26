@@ -9,7 +9,8 @@ on:
 
 jobs:
   build_windows:
-    runs-on: windows-latest
+    # Explicitly specify Visual Studio 2019
+    runs-on: windows-2019
     strategy:
       max-parallel: 5
       matrix:
@@ -41,8 +42,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Setup VS 2019
       uses: microsoft/setup-msbuild@v2
-      with:
-        vs-version: '[16.0,17.0)'
     - name: Build MeCab from source
       shell: cmd
       run: |
