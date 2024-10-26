@@ -1,8 +1,5 @@
 name: Build OSX wheels
 
-env:
-  CIBW_ARCHS_MACOS: "x86_64"
-
 on: [push]
 
 jobs:
