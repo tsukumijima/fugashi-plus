@@ -1,6 +1,8 @@
 include LICENSE
 include README.md
+include fugashi/fugashi.pyi
 include fugashi/fugashi.pyx
 include fugahsi/mecab.pxd
+include fugashi/py.typed
 include fugashi/include/mecab/mecab.h
 include fugashi_util.py

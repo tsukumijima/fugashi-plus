@@ -365,7 +365,7 @@ def try_import_unidic():
             return unidic_lite.DICDIR
         except ImportError:
             # This is OK, just give up.
-            return
+            return None
 
 cdef class Tagger(GenericTagger):
     """Default tagger. Detects the correct Unidic feature format.
