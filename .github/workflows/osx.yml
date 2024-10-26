@@ -13,7 +13,7 @@ jobs:
     - name: Set up python
       uses: actions/setup-python@v5
       with:
-        python-version: '>=3.7 <3.13'
+        python-version: '>=3.7 <3.14'
     - name: Download and build MeCab
       shell: bash
       run: |
@@ -21,7 +21,7 @@ jobs:
 
     - name: Upload Wheels
       uses: actions/upload-artifact@v4
-      with: 
+      with:
         name: osx-wheels
         path: dist
     - name: Publish to PyPI if tagged
@@ -32,4 +32,3 @@ jobs:
       run: |
         pip install twine
         twine upload dist/fugashi*
-
