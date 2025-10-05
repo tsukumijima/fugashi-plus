@@ -1,0 +1,63 @@
+[build-system]
+requires = ["Cython~=3.0.11", "setuptools>=77", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fugashi-plus"
+description = "Cython MeCab wrapper for fast, pythonic Japanese tokenization and morphological analysis with additional improvements."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT AND BSD-3-Clause"
+license-files = ["LICENSE", "LICENSE.mecab"]
+authors = [{ name = "Paul O'Leary McCann", email = "polm@dampfkraft.com" }]
+classifiers = [
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Natural Language :: Japanese",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS :: MacOS X",
+  "Programming Language :: Cython",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Text Processing :: Linguistic",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+unidic = ["unidic"]
+unidic-lite = ["unidic-lite"]
+
+[project.scripts]
+fugashi = "fugashi.cli:main"
+fugashi-info = "fugashi.cli:info"
+fugashi-build-dict = "fugashi.cli:build_dict"
+
+[project.urls]
+source = "https://github.com/tsukumijima/fugashi-plus"
+funding = "https://github.com/sponsors/polm"
+
+[tool.setuptools]
+include-package-data = true
+py-modules = ["fugashi_util"]
+
+[tool.setuptools.package-data]
+fugashi = [
+  "fugashi.pyi",
+  "fugashi.pyx",
+  "mecab.pxd",
+  "py.typed",
+  "include/mecab/mecab.h",
+]
+[tool.setuptools.packages.find]
+include = ["fugashi*"]
+exclude = ["fugashi.tests*"]
+
+[tool.setuptools_scm]
+
+[tool.pytest.ini_options]
+testpaths = ["fugashi/tests"]
