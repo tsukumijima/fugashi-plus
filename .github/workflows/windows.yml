@@ -9,8 +9,8 @@ on:
 
 jobs:
   build_windows:
-    # Explicitly specify Visual Studio 2019
-    runs-on: windows-2019
+    # Explicitly specify Visual Studio 2022
+    runs-on: windows-2022
     strategy:
       max-parallel: 5
       matrix:
